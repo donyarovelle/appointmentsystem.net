@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group .radio-group label {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-top: 5px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .form-group .radio-group {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .form-group input[type="radio"] {
+      width: auto;
+    }
+
+    .form-group input[type="file"] {
+      padding: 10px;
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+    }
+
+    .form-group input[type="file"]:hover {
+      background-color: #e9ecef;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #007bff;
+      margin-top: 25px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .form-group input,
+    .form-group select,
+    .submit-btn {
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      transform: scale(1.02);
+    }
+
+    /* Force text input to uppercase */
+    #name, #purpose {
+      text-transform: uppercase;
+    }
+  </style>
+  <script>
+    // JavaScript to disable past dates
+    document.addEventListener("DOMContentLoaded", function () {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const minDate = `${yyyy}-${mm}-${dd}`;
+      
+      // Set the min attribute for the date input
+      const paymentDateInput = document.getElementById("payment-date");
+      paymentDateInput.setAttribute("min", minDate);
+    });
+  </script>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Payment Form</h2>
+    <form action="save_payment.php" method="POST" enctype="multipart/form-data" id="payment-form">
+      <!-- Personal Details -->
+      <div class="section-title">Personal Details</div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact Number</label>
+        <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required>
+      </div>
+
+      <!-- Payment Information -->
+      <div class="section-title">Payment Information</div>
+      <div class="form-group">
+        <label for="payment-date">Date of Payment</label>
+        <input type="date" id="payment-date" name="payment_date" required>
+      </div>
+      <div class="form-group">
+        <label for="purpose">Purpose</label>
+        <input type="text" id="purpose" name="purpose" placeholder="Purpose of payment" required>
+      </div>
+
+      <!-- Types of Bill -->
+      <div class="section-title">Types of Bill</div>
+      <div class="form-group">
+        <label for="electric-bill">Electric Bill</label>
+        <input type="text" id="electric-bill" name="electric_bill" placeholder="Amount">
+      </div>
+      <div class="form-group">
+        <label for="water-bill">Water Bill</label>
+        <input type="text" id="water-bill" name="water_bill" placeholder="Amount">
+      </div>
+      <div class="form-group">
+        <label for="rental-bill">Rental Bill</label>
+        <input type="text" id="rental-bill" name="rental_bill" placeholder="Amount">
+      </div>
+      <div class="form-group">
+        <label for="combat-pay">Combat Pay</label>
+        <input type="text" id="combat-pay" name="combat_pay" placeholder="Amount">
+      </div>
+      <div class="form-group">
+        <label for="pay-allowances">Pay & Allowances</label>
+        <input type="text" id="pay-allowances" name="pay_allowances" placeholder="Amount">
+      </div>
+      <div class="form-group">
+        <label for="subsistence-allowance">Subsistence Allowance</label>
+        <input type="text" id="subsistence-allowance" name="subsistence_allowance" placeholder="Amount">
+      </div>
+
+      <!-- Mode of Payment -->
+      <div class="section-title">Mode of Payment</div>
+      <div class="form-group">
+        <label>Choose Mode of Payment:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="payment_mode" value="Cash" required> Cash</label>
+          <label><input type="radio" name="payment_mode" value="Check" required> Check</label>
+        </div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label for="bill-upload">Upload Bill</label>
+        <input type="file" id="bill-upload" name="bill" accept=".pdf,.jpg,.jpeg,.png" required>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
